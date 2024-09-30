@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 310698155603830061}
   - component: {fileID: 310698155603830058}
   - component: {fileID: 310698155603830059}
+  - component: {fileID: 5956685818370336137}
   m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
@@ -72,6 +73,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 310698155603830058}
+  _attackController: {fileID: 5956685818370336137}
+--- !u!114 &5956685818370336137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698155603830056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf68259647c15746bf6199da8562cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: []
 --- !u!1 &310698155700902324
 GameObject:
   m_ObjectHideFlags: 0

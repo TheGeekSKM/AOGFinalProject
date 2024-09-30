@@ -18,7 +18,9 @@ public enum PawnState
 public class PawnController : MonoBehaviour
 {
     [SerializeField] NavMeshAgent _navMeshAgent;
+    [SerializeField] PawnAttackController _attackController;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    public PawnAttackController AttackController => _attackController;
 
     PawnState _state;
     public PawnState PawnState => _state;
@@ -30,6 +32,7 @@ public class PawnController : MonoBehaviour
     public PawnCrouchedState CrouchedState { get; private set; }
     public PawnFrozenState FrozenState { get; private set; }
     public PawnAmbushState AmbushState { get; private set; }
+    public PawnAttackState AttackState { get; private set; }
 
     void Awake()
     {
@@ -41,6 +44,7 @@ public class PawnController : MonoBehaviour
         CrouchedState = new PawnCrouchedState(this);
         FrozenState = new PawnFrozenState(this);
         AmbushState = new PawnAmbushState(this);
+        AttackState = new PawnAttackState(this, _attackController);
 
         _pawnStateMachine.AddAnyTransition(IdleState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(SlowMoveState, new BlankPredicate());
@@ -48,6 +52,7 @@ public class PawnController : MonoBehaviour
         _pawnStateMachine.AddAnyTransition(CrouchedState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(FrozenState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(AmbushState, new BlankPredicate());
+        _pawnStateMachine.AddAnyTransition(AttackState, new BlankPredicate());
 
         _pawnStateMachine.SetState(IdleState);
     }
