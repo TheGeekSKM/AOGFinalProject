@@ -1,0 +1,115 @@
+using UnityEngine;
+using SaiUtils.GameEvents;
+using SaiUtils.Singleton;
+
+public class CommandExecutor : Singleton<CommandExecutor>
+{
+    [SerializeField] VectorTwoEvent _moveEvent;
+    [SerializeField] VoidEvent _freezeEvent;
+
+    public void ExecuteCommand(Command command)
+    {
+        switch (command.CommandName)
+        {
+            case "move":
+                HandleMove(command.Args);
+                break;
+            case "freeze":
+                HandleFreeze(command.Args);
+                break;
+            case "takeCover":
+                HandleTakeCover(command.Args);
+                break;
+            case "scoutAhead":
+                HandleScoutAhead(command.Args);
+                break;
+            case "rest":
+                HandleRest(command.Args);
+                break;
+            case "ambush":
+                HandleAmbush();
+                break;
+            case "push":
+                HandlePush(command.Args);
+                break;
+            case "loot":
+                HandleLoot(command.Args);
+                break;
+            case "inspect":
+                HandleInspect(command.Args);
+                break;
+            case "useItem":
+                HandleUseItem(command.Args);
+                break;
+            case "setTrap":
+                HandleSetTrap(command.Args);
+                break;
+            default:
+                Debug.LogError("Invalid command");
+                break;
+        }
+
+    }
+
+    void HandleMove(string[] args)
+    {
+        if (args.Length != 2)
+        {
+            Debug.LogError("Invalid number of arguments for move command");
+            return;
+        }
+
+        float x = float.Parse(args[0]);
+        float z = float.Parse(args[1]);
+
+        _moveEvent?.Raise(new Vector2(x, z));
+        
+    }
+
+    void HandleFreeze(string[] args)
+    {
+        if (args.Length != 0)
+        {
+            Debug.LogError("Invalid number of arguments for freeze command");
+            return;
+        }
+
+        _freezeEvent?.Raise();
+    }
+
+    void HandleTakeCover(string[] args)
+    {
+    }
+
+    void HandleScoutAhead(string[] args)
+    {
+    }
+
+    void HandleRest(string[] args)
+    {
+    }
+
+    void HandleAmbush()
+    {
+    }
+
+    void HandlePush(string[] args)
+    {
+    }
+
+    void HandleLoot(string[] args)
+    {
+    }
+
+    void HandleInspect(string[] args)
+    {
+    }
+
+    void HandleUseItem(string[] args)
+    {
+    }
+
+    void HandleSetTrap(string[] args)
+    {
+    }
+}
