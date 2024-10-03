@@ -968,6 +968,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveEvent: {fileID: 11400000, guid: a4b2a593f81dbae418e5838aa9ad0ad6, type: 2}
+  _pushEvent: {fileID: 11400000, guid: e0f77dbfcb7a18e4d81d5e8aeee4d0ac, type: 2}
+  _crouchEvent: {fileID: 11400000, guid: 67dc41cc6156b8247beb766221b372b4, type: 2}
   _freezeEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
 --- !u!4 &861463817
 Transform:
@@ -1433,6 +1435,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pawn
       objectReference: {fileID: 0}
+    - target: {fileID: 310698155603830058, guid: d1964a24c7ec1194e8030a1f2398b839,
+        type: 3}
+      propertyPath: m_Speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 310698155603830058, guid: d1964a24c7ec1194e8030a1f2398b839,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 310698155603830061, guid: d1964a24c7ec1194e8030a1f2398b839,
         type: 3}
       propertyPath: m_RootOrder
@@ -1446,7 +1458,7 @@ PrefabInstance:
     - target: {fileID: 310698155603830061, guid: d1964a24c7ec1194e8030a1f2398b839,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.102
+      value: 2.08
       objectReference: {fileID: 0}
     - target: {fileID: 310698155603830061, guid: d1964a24c7ec1194e8030a1f2398b839,
         type: 3}
@@ -1488,5 +1500,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3879624376796564213, guid: d1964a24c7ec1194e8030a1f2398b839,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4811937853869595446, guid: d1964a24c7ec1194e8030a1f2398b839, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1964a24c7ec1194e8030a1f2398b839, type: 3}

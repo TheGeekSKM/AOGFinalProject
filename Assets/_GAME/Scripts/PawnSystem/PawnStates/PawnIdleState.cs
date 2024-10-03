@@ -4,5 +4,14 @@ using UnityEngine;
 
 public class PawnIdleState : PawnBaseState
 {
-    public PawnIdleState(PawnController pawn) : base(pawn) { }
+    public PawnIdleState(PawnController pawn) : base(pawn) { 
+        
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        Controller.PawnState = PawnState.Idle;
+        Controller.ResetPawnSpeed();
+    }
 }

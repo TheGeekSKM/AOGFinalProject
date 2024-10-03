@@ -4,5 +4,15 @@ using UnityEngine;
 
 public class PawnAmbushState : PawnBaseState
 {
-    public PawnAmbushState(PawnController pawn) : base(pawn) { }
+    public PawnAmbushState(PawnController pawn) : base(pawn) 
+    {
+
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        Controller.PawnState = PawnState.Ambush;
+        Controller.SetPawnSpeed(0f);
+    }
 }

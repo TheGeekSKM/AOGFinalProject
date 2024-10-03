@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using SaiUtils.Extensions;
 using SaiUtils.StateMachine;
@@ -8,11 +9,11 @@ using UnityEngine.AI;
 public enum PawnState
 {
     Idle,
-    SlowMove,
-    PushedMove,
+    Move,
     Crouched,
     Frozen,
-    Ambush
+    Ambush,
+    Attack
 }
 
 public class PawnController : MonoBehaviour
@@ -22,13 +23,24 @@ public class PawnController : MonoBehaviour
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PawnAttackController AttackController => _attackController;
 
+    [SerializeField] float _startingPawnSpeed = 3f;
+
     PawnState _state;
-    public PawnState PawnState => _state;
+    public PawnState PawnState 
+    {
+        get => _state;
+        set
+        {
+            _state = value;
+            Debug.Log($"Pawn state changed to {_state}");
+        }
+    }
+
+    float currentSpeed;
 
     StateMachine _pawnStateMachine;
     public PawnIdleState IdleState { get; private set; }
-    public PawnSlowMoveState SlowMoveState { get; private set; }
-    public PawnPushedMoveState PushedMoveState { get; private set; }
+    public PawnMoveState MoveState { get; private set; }
     public PawnCrouchedState CrouchedState { get; private set; }
     public PawnFrozenState FrozenState { get; private set; }
     public PawnAmbushState AmbushState { get; private set; }
@@ -39,16 +51,14 @@ public class PawnController : MonoBehaviour
         _pawnStateMachine = new StateMachine();
 
         IdleState = new PawnIdleState(this);
-        SlowMoveState = new PawnSlowMoveState(this);
-        PushedMoveState = new PawnPushedMoveState(this);
+        MoveState = new PawnMoveState(this);
         CrouchedState = new PawnCrouchedState(this);
         FrozenState = new PawnFrozenState(this);
         AmbushState = new PawnAmbushState(this);
         AttackState = new PawnAttackState(this, _attackController);
 
-        _pawnStateMachine.AddAnyTransition(IdleState, new BlankPredicate());
-        _pawnStateMachine.AddAnyTransition(SlowMoveState, new BlankPredicate());
-        _pawnStateMachine.AddAnyTransition(PushedMoveState, new BlankPredicate());
+        _pawnStateMachine.AddAnyTransition(IdleState, new FuncPredicate(() => _navMeshAgent.HasStoppedMoving()));
+        _pawnStateMachine.AddAnyTransition(MoveState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(CrouchedState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(FrozenState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(AmbushState, new BlankPredicate());
@@ -57,45 +67,66 @@ public class PawnController : MonoBehaviour
         _pawnStateMachine.SetState(IdleState);
     }
 
+    void OnEnable()
+    {
+        _attackController.OnTargetFound += OnTargetFound;
+    }
+
+    void OnDisable()
+    {
+        _attackController.OnTargetFound -= OnTargetFound;
+    }
+
+    void Start()
+    {
+        _navMeshAgent.speed = _startingPawnSpeed;
+    }
+
     void OnValidate()
     {
         _navMeshAgent = gameObject.GetOrAdd<NavMeshAgent>();
     }
 
-    void ChangeStateWithDelay(PawnBaseState state, float delay)
+    public void SetPawnSpeed(float speed)
     {
-        StartCoroutine(ChangeStateWithDelayCoroutine(state, delay));        
-    }
-
-    IEnumerator ChangeStateWithDelayCoroutine(PawnBaseState state, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        _pawnStateMachine.ChangeState(state);
+        currentSpeed = speed;
+        Debug.Log($"Pawn speed set to {currentSpeed}");
     }
 
     [Button]
     public void Stop()
     {
         _navMeshAgent.ResetPath();
-        ChangeStateWithDelay(IdleState, 0.2f);
     }
 
     [Button]
     public void SetDestination(Vector2 coords)
     {
         Debug.Log("Setting destination");
-        ChangeStateWithDelay(SlowMoveState, 0.2f);
+        _pawnStateMachine.ChangeState(MoveState);
         _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+    }
+
+    public void PushDestination(Vector2 coords)
+    {
+        Debug.Log("Pushing destination");
+        SetPawnSpeed(_startingPawnSpeed * 2);
+        _pawnStateMachine.ChangeState(MoveState);
+        _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+    }
+
+    public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);
+
+    void OnTargetFound()
+    {
+        _pawnStateMachine.ChangeState(AttackState);
     }
 
     void Update()
     {
         _pawnStateMachine.Update();
-
-        // if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-        // {
-        //     Stop();
-        // }
+        // Debug.Log($"Current speed: {currentSpeed}");
+        _navMeshAgent.speed = currentSpeed;
     }
 
     void FixedUpdate()

@@ -5,6 +5,8 @@ using SaiUtils.Singleton;
 public class CommandExecutor : Singleton<CommandExecutor>
 {
     [SerializeField] VectorTwoEvent _moveEvent;
+    [SerializeField] VectorTwoEvent _pushEvent;
+    [SerializeField] BoolEvent _crouchEvent;
     [SerializeField] VoidEvent _freezeEvent;
 
     public void ExecuteCommand(Command command)
@@ -16,9 +18,6 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 break;
             case "freeze":
                 HandleFreeze(command.Args);
-                break;
-            case "takeCover":
-                HandleTakeCover(command.Args);
                 break;
             case "scoutAhead":
                 HandleScoutAhead(command.Args);
@@ -45,7 +44,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 HandleSetTrap(command.Args);
                 break;
             default:
-                Debug.LogError("Invalid command");
+                Debug.LogWarning("Invalid command");
                 break;
         }
 
@@ -55,7 +54,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
     {
         if (args.Length != 2)
         {
-            Debug.LogError("Invalid number of arguments for move command");
+            Debug.LogWarning("Invalid number of arguments for move command");
             return;
         }
 
@@ -70,15 +69,11 @@ public class CommandExecutor : Singleton<CommandExecutor>
     {
         if (args.Length != 0)
         {
-            Debug.LogError("Invalid number of arguments for freeze command");
+            Debug.LogWarning("Invalid number of arguments for freeze command");
             return;
         }
 
         _freezeEvent?.Raise();
-    }
-
-    void HandleTakeCover(string[] args)
-    {
     }
 
     void HandleScoutAhead(string[] args)
@@ -95,6 +90,16 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     void HandlePush(string[] args)
     {
+        if (args.Length != 2)
+        {
+            Debug.LogWarning("Invalid number of arguments for push command");
+            return;
+        }
+
+        float x = float.Parse(args[0]);
+        float z = float.Parse(args[1]);
+
+        _pushEvent?.Raise(new Vector2(x, z));
     }
 
     void HandleLoot(string[] args)

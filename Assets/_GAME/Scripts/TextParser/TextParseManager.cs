@@ -42,7 +42,7 @@ public class TextParseManager : MonoBehaviour
         if (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input) || input.Length < 2 ||
             !input.Contains("(") || !input.Contains(")") || input.IndexOf("(") > input.IndexOf(")"))
         {
-            Debug.LogError("Invalid command");
+            Debug.LogWarning("Invalid command");
             return null;
         }
 
@@ -54,7 +54,7 @@ public class TextParseManager : MonoBehaviour
 
         if (parts.Length == 0) 
         {
-            Debug.LogError("Invalid command");
+            Debug.LogWarning("Invalid command");
             return null;
         }
 

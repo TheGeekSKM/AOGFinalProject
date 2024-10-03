@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 310698155603830058}
   - component: {fileID: 310698155603830059}
   - component: {fileID: 5956685818370336137}
+  - component: {fileID: 3879624376796564213}
   m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
@@ -56,7 +57,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -74,6 +75,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 310698155603830058}
   _attackController: {fileID: 5956685818370336137}
+  _startingPawnSpeed: 3
+  PawnSpeed: 0
+  _wantingToCrouch: 0
 --- !u!114 &5956685818370336137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +91,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: []
+  _closestTarget: {fileID: 0}
+  _targetUpdateRate: 0.5
+--- !u!136 &3879624376796564213
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698155603830056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &310698155700902324
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +118,6 @@ GameObject:
   - component: {fileID: 310698155700902327}
   - component: {fileID: 310698155700902328}
   - component: {fileID: 310698155700902329}
-  - component: {fileID: 310698155700902326}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
@@ -171,20 +190,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &310698155700902326
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310698155700902324}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &310698157098106808
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +201,8 @@ GameObject:
   - component: {fileID: 310698157098106811}
   - component: {fileID: 310698157098106810}
   - component: {fileID: 310698157098106813}
+  - component: {fileID: 9113411787584648800}
+  - component: {fileID: 6040152449048985301}
   m_Layer: 6
   m_Name: EventListeners
   m_TagString: Untagged
@@ -266,6 +273,62 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
         m_MethodName: Stop
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9113411787584648800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f6084dea04f6c4eacfdc0b51bbb91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: e0f77dbfcb7a18e4d81d5e8aeee4d0ac, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: PushDestination
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6040152449048985301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69467608895accb459a0518918b4bca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 67dc41cc6156b8247beb766221b372b4, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: SetWantingToCrouch
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PawnAttackState : PawnBaseState
 {
-    PawnAttackController attackController;
     public PawnAttackState(PawnController controller, PawnAttackController attackController) : base(controller)
     {
-        this.attackController = attackController;
+        
+    }
+
+    public override void OnEnter()
+    {
+        Controller.PawnState = PawnState.Attack;
+        Controller.SetPawnSpeed(0f);
     }
 }

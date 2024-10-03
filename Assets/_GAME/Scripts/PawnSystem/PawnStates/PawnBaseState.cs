@@ -13,7 +13,7 @@ public class PawnBaseState : IState
 
     public virtual void OnEnter()
     {
-        // Implementation for OnEnter
+        // Implementation for OnEnter");
     }
 
     public virtual void Update()
