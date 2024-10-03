@@ -6,7 +6,10 @@ public class CommandExecutor : Singleton<CommandExecutor>
 {
     [SerializeField] VectorTwoEvent _moveEvent;
     [SerializeField] VectorTwoEvent _pushEvent;
+    [SerializeField] VectorTwoEvent _scoutAheadEvent;
     [SerializeField] BoolEvent _crouchEvent;
+    [SerializeField] VoidEvent _restEvent;
+    [SerializeField] VoidEvent _ambushEvent;
     [SerializeField] VoidEvent _freezeEvent;
 
     public void ExecuteCommand(Command command)
@@ -26,7 +29,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 HandleRest(command.Args);
                 break;
             case "ambush":
-                HandleAmbush();
+                HandleAmbush(command.Args);
                 break;
             case "push":
                 HandlePush(command.Args);
@@ -78,14 +81,38 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     void HandleScoutAhead(string[] args)
     {
+        if (args.Length != 2)
+        {
+            Debug.LogWarning("Invalid number of arguments for scoutAhead command");
+            return;
+        }
+
+        float x = float.Parse(args[0]);
+        float z = float.Parse(args[1]);
+
+        _scoutAheadEvent?.Raise(new Vector2(x, z));
     }
 
     void HandleRest(string[] args)
     {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for rest command");
+            return;
+        }
+
+        _restEvent?.Raise();
     }
 
-    void HandleAmbush()
+    void HandleAmbush(string[] args)
     {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for ambush command");
+            return;
+        }
+
+        _ambushEvent?.Raise();
     }
 
     void HandlePush(string[] args)

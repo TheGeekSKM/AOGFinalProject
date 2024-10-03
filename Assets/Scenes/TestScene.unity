@@ -969,7 +969,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveEvent: {fileID: 11400000, guid: a4b2a593f81dbae418e5838aa9ad0ad6, type: 2}
   _pushEvent: {fileID: 11400000, guid: e0f77dbfcb7a18e4d81d5e8aeee4d0ac, type: 2}
+  _scoutAheadEvent: {fileID: 11400000, guid: 61722767c09038542a8c7c562a00dec4, type: 2}
   _crouchEvent: {fileID: 11400000, guid: 67dc41cc6156b8247beb766221b372b4, type: 2}
+  _restEvent: {fileID: 11400000, guid: d26eda670b23a87448781c8b3ae7b266, type: 2}
+  _ambushEvent: {fileID: 11400000, guid: 0e2e962f7e22a674581361ca21c64d6c, type: 2}
   _freezeEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
 --- !u!4 &861463817
 Transform:
