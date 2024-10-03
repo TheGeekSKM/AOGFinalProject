@@ -12,6 +12,5 @@ public class PawnAttackState : PawnBaseState
     public override void OnEnter()
     {
         Controller.PawnState = PawnState.Attack;
-        Controller.SetPawnSpeed(0f);
     }
 }

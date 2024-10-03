@@ -13,6 +13,5 @@ public class PawnAmbushState : PawnBaseState
     {
         base.OnEnter();
         Controller.PawnState = PawnState.Ambush;
-        Controller.SetPawnSpeed(0f);
     }
 }

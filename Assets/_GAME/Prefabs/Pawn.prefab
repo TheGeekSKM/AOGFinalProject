@@ -49,7 +49,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -58,7 +58,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0
+  m_BaseOffset: 0.75
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &310698155603830059
@@ -75,9 +75,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 310698155603830058}
   _attackController: {fileID: 5956685818370336137}
+  _destinationTrigger: {fileID: 8837148395481082077, guid: a6dd384ccef1ad5499b084787900dce7,
+    type: 3}
+  _enemyScoutTrigger: {fileID: 8605484937970302040, guid: 1de06a35fc4b5cd49bc8942c34e24b95,
+    type: 3}
+  _scoutSearchRange: 10
   _startingPawnSpeed: 3
-  PawnSpeed: 0
-  _wantingToCrouch: 0
 --- !u!114 &5956685818370336137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +105,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 310698155603830056}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -200,9 +203,10 @@ GameObject:
   m_Component:
   - component: {fileID: 310698157098106811}
   - component: {fileID: 310698157098106810}
-  - component: {fileID: 310698157098106813}
   - component: {fileID: 9113411787584648800}
+  - component: {fileID: 1051293827095182087}
   - component: {fileID: 6040152449048985301}
+  - component: {fileID: 310698157098106813}
   m_Layer: 6
   m_Name: EventListeners
   m_TagString: Untagged
@@ -253,34 +257,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &310698157098106813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310698157098106808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2a6e78eedadc045a9959ea6ef70ad2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
-  unityEventResponse:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 310698155603830059}
-        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &9113411787584648800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +276,34 @@ MonoBehaviour:
       - m_Target: {fileID: 310698155603830059}
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
         m_MethodName: PushDestination
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1051293827095182087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f6084dea04f6c4eacfdc0b51bbb91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 61722767c09038542a8c7c562a00dec4, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: ScoutAhead
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -329,6 +333,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
         m_MethodName: SetWantingToCrouch
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &310698157098106813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2a6e78eedadc045a9959ea6ef70ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -407,6 +439,7 @@ MonoBehaviour:
   _desiredLayer:
     serializedVersion: 2
     m_Bits: 128
+  _collider: {fileID: 7867183703938101841}
   _onTriggerEnter:
     m_PersistentCalls:
       m_Calls: []

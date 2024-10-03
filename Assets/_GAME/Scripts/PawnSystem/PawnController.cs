@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using SaiUtils.Extensions;
 using SaiUtils.StateMachine;
+using SaiUtils.Triggers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +21,9 @@ public class PawnController : MonoBehaviour
 {
     [SerializeField] NavMeshAgent _navMeshAgent;
     [SerializeField] PawnAttackController _attackController;
+    [SerializeField] TriggerController _destinationTrigger;
+    [SerializeField] GrowingTriggerController _enemyScoutTrigger;
+    [SerializeField] float _scoutSearchRange = 10f;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PawnAttackController AttackController => _attackController;
 
@@ -93,6 +97,7 @@ public class PawnController : MonoBehaviour
         Debug.Log($"Pawn speed set to {currentSpeed}");
     }
 
+  
     [Button]
     public void Stop()
     {
@@ -113,6 +118,36 @@ public class PawnController : MonoBehaviour
         SetPawnSpeed(_startingPawnSpeed * 2);
         _pawnStateMachine.ChangeState(MoveState);
         _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+    }
+
+    public void ScoutAhead(Vector2 coords)
+    {
+        Debug.Log("Scouting ahead");
+        _pawnStateMachine.ChangeState(CrouchedState);
+        SetPawnSpeed(_startingPawnSpeed / 2);
+
+        CreateScoutTrigger(coords);
+
+        _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+    }
+
+    void CreateScoutTrigger(Vector2 coords)
+    {
+        // create a destination trigger
+        var trigger = Instantiate(_destinationTrigger, new Vector3(coords.x, transform.position.y, coords.y), Quaternion.identity);
+        
+        // add a listener to the trigger for when it is entered
+        trigger.AddListener(TriggerEventType.Enter, (other) =>
+        {
+            Debug.Log("Scout ahead trigger entered"); // log that the trigger was entered
+            _navMeshAgent.ResetPath(); // reset the path of the nav mesh agent
+            ResetPawnSpeed(); // reset the pawn speed
+            var scout = Instantiate(_enemyScoutTrigger, new Vector3(coords.x, transform.position.y, coords.y), Quaternion.identity); // create a scout trigger
+            scout.Initialize(_scoutSearchRange, 10f); // initialize the scout trigger so that it grows to the search range
+            Destroy(trigger.gameObject); // destroy the destination trigger
+        });
+
+        
     }
 
     public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);

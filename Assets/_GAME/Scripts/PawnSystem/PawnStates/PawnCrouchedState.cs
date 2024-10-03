@@ -12,6 +12,5 @@ public class PawnCrouchedState : PawnBaseState
     {
         base.OnEnter();
         Controller.PawnState = PawnState.Crouched;
-        Controller.SetPawnSpeed(1.5f);
     }
 }

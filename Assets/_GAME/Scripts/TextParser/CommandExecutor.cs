@@ -4,13 +4,24 @@ using SaiUtils.Singleton;
 
 public class CommandExecutor : Singleton<CommandExecutor>
 {
+    [Header("Vector 2 Events")]
     [SerializeField] VectorTwoEvent _moveEvent;
     [SerializeField] VectorTwoEvent _pushEvent;
     [SerializeField] VectorTwoEvent _scoutAheadEvent;
+
+    [Header("Bool Events")]
     [SerializeField] BoolEvent _crouchEvent;
+
+    [Header("String Events")]
+    [SerializeField] StringEvent _useItemEvent;
+
+    [Header("Void Events")]
     [SerializeField] VoidEvent _restEvent;
     [SerializeField] VoidEvent _ambushEvent;
     [SerializeField] VoidEvent _freezeEvent;
+    [SerializeField] VoidEvent _lootEvent;
+    [SerializeField] VoidEvent _inspectEvent;
+    [SerializeField] VoidEvent _setTrapEvent;
 
     public void ExecuteCommand(Command command)
     {
@@ -131,17 +142,45 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     void HandleLoot(string[] args)
     {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for loot command");
+            return;
+        }
+
+        _lootEvent?.Raise();
     }
 
     void HandleInspect(string[] args)
     {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for inspect command");
+            return;
+        }
+
+        _inspectEvent?.Raise();
     }
 
     void HandleUseItem(string[] args)
     {
+        if (args.Length != 1)
+        {
+            Debug.LogWarning("Invalid number of arguments for useItem command");
+            return;
+        }
+
+        _useItemEvent?.Raise(args[0]);
     }
 
     void HandleSetTrap(string[] args)
     {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for setTrap command");
+            return;
+        }
+
+        _setTrapEvent?.Raise();
     }
 }

@@ -12,6 +12,5 @@ public class PawnFrozenState : PawnBaseState
     {
         base.OnEnter();
         Controller.PawnState = PawnState.Frozen;
-        Controller.SetPawnSpeed(0f);
     }
 }
