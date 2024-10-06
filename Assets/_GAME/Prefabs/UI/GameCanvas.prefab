@@ -147,13 +147,14 @@ GameObject:
   - component: {fileID: 4122561989927114453}
   - component: {fileID: 4122561989927114452}
   - component: {fileID: 4122561989927114455}
+  - component: {fileID: 3538101568374961884}
   m_Layer: 5
   m_Name: InventoryCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4122561989927114454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4122561989927114281}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
@@ -236,6 +237,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 503
+--- !u!114 &3538101568374961884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122561989927114281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764cdfbb3ce424e49b762cf6f3b114de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryContent: {fileID: 8286841956199710918}
+  _inventoryDisplay: {fileID: 5379317555727459413, guid: 76a2f1ad74be6eb4b947b7f88e8978f1,
+    type: 3}
+  _inventoryItemDisplayManagers: []
 --- !u!1 &4122561989980620762
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc8f3c48cc8864a4ca76d6be643f3a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryCanvas: {fileID: 4122561989927114453}
+  _inventoryCanvas: {fileID: 3538101568374961884}
 --- !u!1 &4122561990416579282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,14 +1958,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4122561989927114454}
     m_Modifications:
+    - target: {fileID: 1328126199260278912, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4151995247099068873, guid: 51721bc232a1a5e4ab14471e379ce2ec,
         type: 3}
       propertyPath: canvas
-      value: 
-      objectReference: {fileID: 4122561990019532535}
-    - target: {fileID: 4151995247099068873, guid: 51721bc232a1a5e4ab14471e379ce2ec,
-        type: 3}
-      propertyPath: _canvas
       value: 
       objectReference: {fileID: 4122561990019532535}
     - target: {fileID: 4151995247099068873, guid: 51721bc232a1a5e4ab14471e379ce2ec,
@@ -2066,11 +2083,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: PNL_Inventory
       objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641445499029471574, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51721bc232a1a5e4ab14471e379ce2ec, type: 3}
 --- !u!224 &2559490592942561055 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4822113051149969241, guid: 51721bc232a1a5e4ab14471e379ce2ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 7020748324560580678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8286841956199710918 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1328126199260278912, guid: 51721bc232a1a5e4ab14471e379ce2ec,
     type: 3}
   m_PrefabInstance: {fileID: 7020748324560580678}
   m_PrefabAsset: {fileID: 0}

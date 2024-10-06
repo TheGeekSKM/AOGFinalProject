@@ -32,7 +32,8 @@ public class TextParseManager : MonoBehaviour
             CommandExecutor.Instance.ExecuteCommand(command);
         }
 
-        _inputField.text = "";  
+        _inputField.text = "";
+        _inputField.ActivateInputField();  
     }
 
     public Command ParseCommand(string input)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SaiUtils.Extensions;
+using SaiUtils.Singleton;
 using SaiUtils.StateMachine;
 using SaiUtils.Triggers;
 using Sirenix.OdinInspector;
@@ -17,18 +18,28 @@ public enum PawnState
     Attack
 }
 
-public class PawnController : MonoBehaviour
+public class PawnController : Singleton<PawnController>
 {
+    [Header("Components")]
     [SerializeField] NavMeshAgent _navMeshAgent;
     [SerializeField] PawnAttackController _attackController;
     [SerializeField] TriggerController _destinationTrigger;
     [SerializeField] GrowingTriggerController _enemyScoutTrigger;
     [SerializeField] Health _health;
+    [SerializeField] LootContainer _inventory;
+
+    [Header("Settings")]
     [SerializeField] float _scoutSearchRange = 10f;
     [SerializeField] float _healthPerSecondWhenResting = 1f;
+
+    [Header("Loot Nearby")]
     [SerializeField] List<LootContainer> _lootContainers;
+
+
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PawnAttackController AttackController => _attackController;
+    public Health Health => _health;
+    public LootContainer Inventory => _inventory;
 
     [SerializeField] float _startingPawnSpeed = 3f;
 
@@ -114,7 +125,7 @@ public class PawnController : MonoBehaviour
     public void SetPawnSpeed(float speed)
     {
         currentSpeed = speed;
-        Debug.Log($"Pawn speed set to {currentSpeed}");
+        // Debug.Log($"Pawn speed set to {currentSpeed}");
     }
 
   
@@ -205,9 +216,10 @@ public class PawnController : MonoBehaviour
 
     public void Loot()
     {
-        foreach (var lootContainer in _lootContainers)
+        for (int i = 0; i < _lootContainers.Count; i++)
         {
-            Debug.Log($"Looting {lootContainer.name}");
+            _inventory.AddLootList(_lootContainers[i].Items);
+            Destroy(_lootContainers[i].gameObject);
         }
     }
 

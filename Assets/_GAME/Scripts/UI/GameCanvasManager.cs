@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameCanvasManager : MonoBehaviour
 {
-    [SerializeField] Canvas _inventoryCanvas;
+    [SerializeField] InventoryDisplayController _inventoryCanvas;
 
-    public void SetInventoryVisibility() => _inventoryCanvas.gameObject.SetActive(!_inventoryCanvas.gameObject.activeSelf);
+    public void SetInventoryVisibility() 
+    {
+        _inventoryCanvas.gameObject.SetActive(!_inventoryCanvas.gameObject.activeSelf);
+        _inventoryCanvas.Initialize();
+    }
 }

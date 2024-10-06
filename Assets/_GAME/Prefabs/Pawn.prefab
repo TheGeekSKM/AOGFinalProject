@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3879624376796564213}
   - component: {fileID: 8309938741166276189}
   - component: {fileID: 5331173338874107623}
+  - component: {fileID: 4002817597260996670}
   m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
@@ -85,6 +86,7 @@ MonoBehaviour:
   _enemyScoutTrigger: {fileID: 8605484937970302040, guid: 1de06a35fc4b5cd49bc8942c34e24b95,
     type: 3}
   _health: {fileID: 5331173338874107623}
+  _inventory: {fileID: 4002817597260996670}
   _scoutSearchRange: 10
   _healthPerSecondWhenResting: 1
   _lootContainers: []
@@ -155,6 +157,19 @@ MonoBehaviour:
   _damageFeedbackPrefab: {fileID: 0}
   _deathFeedbackPrefab: {fileID: 0}
   _onHealthChanged: {fileID: 11400000, guid: 47d8d6c97dbeaa44dba54981b8f6b07b, type: 2}
+--- !u!114 &4002817597260996670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698155603830056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821da10d4ca2e444a9c0d31ee17efefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
 --- !u!1 &310698155700902324
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,15 @@
 using UnityEngine;
 
+public enum ItemType
+{
+    Consumable,
+    Weapon,
+    Armor,
+    Quest,
+    Key,
+    Junk
+}
+
 [CreateAssetMenu(menuName = "Items/ItemData", fileName = "New Item Data")]
 public class ItemData : ScriptableObject
 {
@@ -7,10 +17,12 @@ public class ItemData : ScriptableObject
     [SerializeField] string itemName;
     [SerializeField] string itemDescription;
     [SerializeField] string itemUseDescription;
+    [SerializeField] ItemType itemType;
 
     public string ItemName => itemName;
     public string ItemDescription => itemDescription;
     public string ItemUseDescription => itemUseDescription;
+    public ItemType ItemType => itemType;
 
     [Header("Feedback")]
     [SerializeField] GameObject _useItemFeedbackPrefab;
