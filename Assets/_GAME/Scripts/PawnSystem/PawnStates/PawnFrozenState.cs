@@ -13,4 +13,10 @@ public class PawnFrozenState : PawnBaseState
         base.OnEnter();
         Controller.PawnState = PawnState.Frozen;
     }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+        Controller.IsResting = false;
+    }
 }

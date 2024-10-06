@@ -48,7 +48,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
             case "loot":
                 HandleLoot(command.Args);
                 break;
-            case "inspect":
+            case "inventory":
                 HandleInspect(command.Args);
                 break;
             case "useItem":

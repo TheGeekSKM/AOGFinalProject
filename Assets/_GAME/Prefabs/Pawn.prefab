@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5956685818370336137}
   - component: {fileID: 3879624376796564213}
   - component: {fileID: 8309938741166276189}
+  - component: {fileID: 5331173338874107623}
   m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
     type: 3}
   _enemyScoutTrigger: {fileID: 8605484937970302040, guid: 1de06a35fc4b5cd49bc8942c34e24b95,
     type: 3}
+  _health: {fileID: 5331173338874107623}
   _scoutSearchRange: 10
   _startingPawnSpeed: 3
 --- !u!114 &5956685818370336137
@@ -129,6 +131,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5331173338874107623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698155603830056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732ff00cef0d5e5439782a99898c6d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useScriptableVariables: 0
+  _maxHealth: 100
+  _currentHealth: 100
+  _maxHealthVariable: {fileID: 0}
+  _currentHealthVariable: {fileID: 0}
+  _healingFeedbackPrefab: {fileID: 0}
+  _damageFeedbackPrefab: {fileID: 0}
+  _deathFeedbackPrefab: {fileID: 0}
+  _onHealthChanged: {fileID: 11400000, guid: 47d8d6c97dbeaa44dba54981b8f6b07b, type: 2}
 --- !u!1 &310698155700902324
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +249,9 @@ GameObject:
   - component: {fileID: 1051293827095182087}
   - component: {fileID: 6040152449048985301}
   - component: {fileID: 310698157098106813}
+  - component: {fileID: 7507773439170558408}
+  - component: {fileID: 1959350069}
+  - component: {fileID: 806336339179680363}
   m_Layer: 6
   m_Name: EventListeners
   m_TagString: Untagged
@@ -350,7 +376,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 310698155603830059}
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
-        m_MethodName: SetWantingToCrouch
+        m_MethodName: SetCrouch
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -379,6 +405,90 @@ MonoBehaviour:
       - m_Target: {fileID: 310698155603830059}
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
         m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7507773439170558408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2a6e78eedadc045a9959ea6ef70ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 9063929eae97eee408b03d7678aa207e, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: SetPlayerIdle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1959350069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2a6e78eedadc045a9959ea6ef70ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: ba585b70d3a81e342a54768161ded1f7, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: SetCrouch
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &806336339179680363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2a6e78eedadc045a9959ea6ef70ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: d26eda670b23a87448781c8b3ae7b266, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 310698155603830059}
+        m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
+        m_MethodName: SetPlayerRest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

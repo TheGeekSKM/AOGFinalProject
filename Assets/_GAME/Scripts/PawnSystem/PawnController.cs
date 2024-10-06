@@ -11,7 +11,6 @@ public enum PawnState
 {
     Idle,
     Move,
-    Crouched,
     Frozen,
     Ambush,
     Attack
@@ -23,7 +22,9 @@ public class PawnController : MonoBehaviour
     [SerializeField] PawnAttackController _attackController;
     [SerializeField] TriggerController _destinationTrigger;
     [SerializeField] GrowingTriggerController _enemyScoutTrigger;
+    [SerializeField] Health _health;
     [SerializeField] float _scoutSearchRange = 10f;
+    [SerializeField] float _healthPerSecondWhenResting = 1f;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PawnAttackController AttackController => _attackController;
 
@@ -41,11 +42,21 @@ public class PawnController : MonoBehaviour
     }
 
     float currentSpeed;
+    float restingCounter = 0;
+    bool _resting = false;
+    public bool IsResting 
+    {
+        get => _resting;
+        set
+        {
+            _resting = value;
+            Debug.Log($"Pawn is resting: {_resting}");
+        }
+    }
 
     StateMachine _pawnStateMachine;
     public PawnIdleState IdleState { get; private set; }
-    public PawnMoveState MoveState { get; private set; }
-    public PawnCrouchedState CrouchedState { get; private set; }
+    private PawnMoveState MoveState { get; set; }
     public PawnFrozenState FrozenState { get; private set; }
     public PawnAmbushState AmbushState { get; private set; }
     public PawnAttackState AttackState { get; private set; }
@@ -56,19 +67,26 @@ public class PawnController : MonoBehaviour
 
         IdleState = new PawnIdleState(this);
         MoveState = new PawnMoveState(this);
-        CrouchedState = new PawnCrouchedState(this);
         FrozenState = new PawnFrozenState(this);
         AmbushState = new PawnAmbushState(this);
         AttackState = new PawnAttackState(this, _attackController);
 
-        _pawnStateMachine.AddAnyTransition(IdleState, new FuncPredicate(() => _navMeshAgent.HasStoppedMoving()));
+        _pawnStateMachine.AddAnyTransition(IdleState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(MoveState, new BlankPredicate());
-        _pawnStateMachine.AddAnyTransition(CrouchedState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(FrozenState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(AmbushState, new BlankPredicate());
         _pawnStateMachine.AddAnyTransition(AttackState, new BlankPredicate());
 
         _pawnStateMachine.SetState(IdleState);
+    }
+
+    bool IsPlayerIdle()
+    {
+        if (!_navMeshAgent.HasStoppedMoving()) return false;
+        if (PawnState == PawnState.Ambush) return false;
+        if (PawnState == PawnState.Frozen) return false;
+        if (PawnState == PawnState.Attack) return false;
+        return true;
     }
 
     void OnEnable()
@@ -123,7 +141,6 @@ public class PawnController : MonoBehaviour
     public void ScoutAhead(Vector2 coords)
     {
         Debug.Log("Scouting ahead");
-        _pawnStateMachine.ChangeState(CrouchedState);
         SetPawnSpeed(_startingPawnSpeed / 2);
 
         CreateScoutTrigger(coords);
@@ -146,8 +163,30 @@ public class PawnController : MonoBehaviour
             scout.Initialize(_scoutSearchRange, 10f); // initialize the scout trigger so that it grows to the search range
             Destroy(trigger.gameObject); // destroy the destination trigger
         });
+    }
 
-        
+    public void SetCrouch(bool crouch)
+    {
+        if (crouch)
+        {
+            SetPawnSpeed(_startingPawnSpeed / 2);
+        }
+        else
+        {
+            ResetPawnSpeed();
+        }
+    }
+
+    public void SetPlayerRest() 
+    {
+        _pawnStateMachine.ChangeState(FrozenState);
+        _resting = true;
+    }
+
+    public void SetPlayerIdle()
+    {
+        _pawnStateMachine.ChangeState(IdleState);
+        ResetPawnSpeed();
     }
 
     public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);
@@ -159,8 +198,25 @@ public class PawnController : MonoBehaviour
 
     void Update()
     {
-        _pawnStateMachine.Update();
-        // Debug.Log($"Current speed: {currentSpeed}");
+        // _pawnStateMachine.Update();
+        if (IsPlayerIdle())
+        {
+            _pawnStateMachine.ChangeState(IdleState);
+            ResetPawnSpeed();
+        }
+
+        if (_resting)
+        {
+            Stop();
+            restingCounter += Time.deltaTime;
+
+            if (restingCounter >= 1)
+            {
+                _health.ChangeHealth(_healthPerSecondWhenResting);
+                restingCounter = 0;
+            }
+        }
+
         _navMeshAgent.speed = currentSpeed;
     }
 

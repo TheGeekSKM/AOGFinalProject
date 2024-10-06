@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464bad5f2f5f23c4296ca388ddb9d870, type: 3}
-  m_Name: InspectEvent
+  m_Script: {fileID: 11500000, guid: a6c630bc6dbb50248b888a31a16ed6c9, type: 3}
+  m_Name: PlayerHealthChangeEvent
   m_EditorClassIdentifier: 
