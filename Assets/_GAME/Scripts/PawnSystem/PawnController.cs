@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using SaiUtils.Extensions;
 using SaiUtils.StateMachine;
 using SaiUtils.Triggers;
@@ -25,6 +26,7 @@ public class PawnController : MonoBehaviour
     [SerializeField] Health _health;
     [SerializeField] float _scoutSearchRange = 10f;
     [SerializeField] float _healthPerSecondWhenResting = 1f;
+    [SerializeField] List<LootContainer> _lootContainers;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public PawnAttackController AttackController => _attackController;
 
@@ -191,6 +193,24 @@ public class PawnController : MonoBehaviour
 
     public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);
 
+    public void AddLootContainer(GameObject lootContainer)
+    {
+        _lootContainers.Add(lootContainer.GetComponent<LootContainer>());
+    }
+
+    public void RemoveLootContainer(GameObject lootContainer)
+    {
+        _lootContainers.Remove(lootContainer.GetComponent<LootContainer>());
+    }
+
+    public void Loot()
+    {
+        foreach (var lootContainer in _lootContainers)
+        {
+            Debug.Log($"Looting {lootContainer.name}");
+        }
+    }
+
     void OnTargetFound()
     {
         _pawnStateMachine.ChangeState(AttackState);
@@ -210,7 +230,7 @@ public class PawnController : MonoBehaviour
             Stop();
             restingCounter += Time.deltaTime;
 
-            if (restingCounter >= 1)
+            if (restingCounter >= 3)
             {
                 _health.ChangeHealth(_healthPerSecondWhenResting);
                 restingCounter = 0;
