@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 1959350069}
   - component: {fileID: 806336339179680363}
   - component: {fileID: 7524228942291908886}
+  - component: {fileID: 7979575832012135618}
   m_Layer: 6
   m_Name: EventListeners
   m_TagString: Untagged
@@ -537,6 +538,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PawnController, Assembly-CSharp
         m_MethodName: Loot
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7979575832012135618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7f4af38939a8c42840d143eb37169f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 39d22222af5d96647917185b47cd71b0, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4002817597260996670}
+        m_TargetAssemblyTypeName: LootContainer, Assembly-CSharp
+        m_MethodName: UseItem
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

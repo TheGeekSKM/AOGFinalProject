@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe74356a79a944448ee81f47b5333f2, type: 3}
   m_Name: TestItem
   m_EditorClassIdentifier: 
-  itemName: TestItem
+  itemName: test_item
   itemDescription: This is a test item if I do say so myself...
   itemUseDescription: Test Item was used....
+  itemType: 0
   _useItemFeedbackPrefab: {fileID: 0}
   _dropItemFeedbackPrefab: {fileID: 0}

@@ -18,4 +18,14 @@ public class LootContainer : MonoBehaviour
     {
         items.AddRange(loot);
     }
+
+    public void UseItem(string itemName)
+    {
+        ItemData item = items.Find(i => i.ItemName == itemName);
+        if (item == null) {
+            Debug.LogWarning("Item not found in loot container: " + itemName);
+            return;
+        }
+        item.UseItem();
+    }
 }

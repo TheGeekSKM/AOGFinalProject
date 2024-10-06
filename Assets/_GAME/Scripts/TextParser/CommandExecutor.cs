@@ -1,6 +1,7 @@
 using UnityEngine;
 using SaiUtils.GameEvents;
 using SaiUtils.Singleton;
+using System.Collections.Generic;
 
 public class CommandExecutor : Singleton<CommandExecutor>
 {
@@ -22,6 +23,33 @@ public class CommandExecutor : Singleton<CommandExecutor>
     [SerializeField] VoidEvent _lootEvent;
     [SerializeField] VoidEvent _inspectEvent;
     [SerializeField] VoidEvent _setTrapEvent;
+
+    [SerializeField] List<string> _previousCommands = new List<string>();
+    int _commandIndex = 0;
+
+    public void AddCommandToHistory(string command)
+    {
+        //if the command is the same as the last one, don't add it
+        if (_previousCommands.Count > 0 && _previousCommands[_previousCommands.Count - 1] == command) return;
+        _previousCommands.Add(command);
+        _commandIndex = _previousCommands.Count - 1;
+    }
+
+    public string GetLastCommand()
+    {
+        if (_previousCommands.Count == 0) return "";
+        var answer = _previousCommands[_commandIndex];
+        if (_commandIndex > 0) _commandIndex--;
+        return answer;
+    }
+
+    public string GetNextCommand()
+    {
+        if (_previousCommands.Count == 0) return "";
+        var answer = _previousCommands[_commandIndex];
+        if (_commandIndex < _previousCommands.Count - 1) _commandIndex++;
+        return answer;
+    }
 
     public void ExecuteCommand(Command command)
     {
@@ -59,6 +87,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 break;
             default:
                 Debug.LogWarning("Invalid command");
+                WarningManager.Instance.ShowWarning("Invalid command", 3f);
                 break;
         }
 
@@ -69,6 +98,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 2)
         {
             Debug.LogWarning("Invalid number of arguments for move command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for move command", 3f);
             return;
         }
 
@@ -84,6 +114,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 0)
         {
             Debug.LogWarning("Invalid number of arguments for freeze command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for freeze command", 3f);
             return;
         }
 
@@ -95,6 +126,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 2)
         {
             Debug.LogWarning("Invalid number of arguments for scoutAhead command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for scoutAhead command", 3f);
             return;
         }
 
@@ -109,6 +141,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 0)
         {
             Debug.LogWarning("Invalid number of arguments for rest command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for rest command", 3f);
             return;
         }
 
@@ -120,6 +153,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 0)
         {
             Debug.LogWarning("Invalid number of arguments for ambush command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for ambush command", 3f);
             return;
         }
 
@@ -131,6 +165,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 2)
         {
             Debug.LogWarning("Invalid number of arguments for push command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for push command", 3f);
             return;
         }
 
@@ -145,6 +180,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 0)
         {
             Debug.LogWarning("Invalid number of arguments for loot command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for loot command", 3f);
             return;
         }
 
@@ -155,7 +191,8 @@ public class CommandExecutor : Singleton<CommandExecutor>
     {
         if (args.Length != 0)
         {
-            Debug.LogWarning("Invalid number of arguments for inspect command");
+            Debug.LogWarning("Invalid number of arguments for inventory command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for inventory command", 3f);
             return;
         }
 
@@ -167,6 +204,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 1)
         {
             Debug.LogWarning("Invalid number of arguments for useItem command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for useItem command", 3f);
             return;
         }
 
@@ -178,6 +216,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
         if (args.Length != 0)
         {
             Debug.LogWarning("Invalid number of arguments for setTrap command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for setTrap command", 3f);
             return;
         }
 

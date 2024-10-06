@@ -22,9 +22,21 @@ public class TextParseManager : MonoBehaviour
         _inputField.onEndEdit.RemoveListener(OnEndEdit);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            _inputField.text = CommandExecutor.Instance.GetLastCommand();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            _inputField.text = CommandExecutor.Instance.GetNextCommand();
+        }
+    }
+
     void OnEndEdit(string text)
     {
-        Debug.Log(text);   
+        Debug.Log(text);
         Command command = ParseCommand(text);
         if (command != null)
         {
@@ -57,6 +69,7 @@ public class TextParseManager : MonoBehaviour
             return null;
         }
 
+        CommandExecutor.Instance.AddCommandToHistory(input);   
         string commandName = parts[0];
         string[] args = new string[parts.Length - 1];
 
