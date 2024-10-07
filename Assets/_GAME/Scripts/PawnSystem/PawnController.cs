@@ -27,6 +27,7 @@ public class PawnController : Singleton<PawnController>
     [SerializeField] GrowingTriggerController _enemyScoutTrigger;
     [SerializeField] Health _health;
     [SerializeField] LootContainer _inventory;
+    [SerializeField] Transform _firePoint;
 
     [Header("Settings")]
     [SerializeField] float _scoutSearchRange = 10f;
@@ -40,6 +41,7 @@ public class PawnController : Singleton<PawnController>
     public PawnAttackController AttackController => _attackController;
     public Health Health => _health;
     public LootContainer Inventory => _inventory;
+    public Transform FirePoint => _firePoint;
 
     [SerializeField] float _startingPawnSpeed = 3f;
 

@@ -87,8 +87,9 @@ MonoBehaviour:
     type: 3}
   _health: {fileID: 5331173338874107623}
   _inventory: {fileID: 4002817597260996670}
+  _firePoint: {fileID: 8544203907279425266}
   _scoutSearchRange: 10
-  _healthPerSecondWhenResting: 1
+  _healthPerSecondWhenResting: 3
   _lootContainers: []
   _startingPawnSpeed: 3
 --- !u!114 &5956685818370336137
@@ -106,6 +107,8 @@ MonoBehaviour:
   _target: []
   _closestTarget: {fileID: 0}
   _targetUpdateRate: 0.5
+  _equippedWeapon: {fileID: 0}
+  _onTargetFound: {fileID: 11400000, guid: c85c9c362a7474942b18e55e02db6b78, type: 2}
 --- !u!136 &3879624376796564213
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -150,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useScriptableVariables: 0
   _maxHealth: 100
-  _currentHealth: 100
+  _currentHealth: 20
   _maxHealthVariable: {fileID: 0}
   _currentHealthVariable: {fileID: 0}
   _healingFeedbackPrefab: {fileID: 0}
@@ -169,7 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821da10d4ca2e444a9c0d31ee17efefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 11400000, guid: acefa9a08231e8f4a82b133f99f48a6b, type: 2}
+  - {fileID: 11400000, guid: acefa9a08231e8f4a82b133f99f48a6b, type: 2}
+  - {fileID: 11400000, guid: acefa9a08231e8f4a82b133f99f48a6b, type: 2}
 --- !u!1 &310698155700902324
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +278,7 @@ GameObject:
   - component: {fileID: 806336339179680363}
   - component: {fileID: 7524228942291908886}
   - component: {fileID: 7979575832012135618}
+  - component: {fileID: 2507456632484568294}
   m_Layer: 6
   m_Name: EventListeners
   m_TagString: Untagged
@@ -574,6 +581,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2507456632484568294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310698157098106808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962326d4c991138499936b91ed2656eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 089dc62c4e5579744a51e8aa4c5cdcd7, type: 2}
+  unityEventResponse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &511332317282652680
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,8 +606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2757394577423874593}
-  - component: {fileID: 530022234206718360}
-  - component: {fileID: 7867183703938101841}
+  - component: {fileID: 4766044459010563258}
   - component: {fileID: 6433627233157736554}
   m_Layer: 8
   m_Name: EnemyDetectorTrigger
@@ -603,21 +625,13 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 310698155603830061}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &530022234206718360
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511332317282652680}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!135 &7867183703938101841
-SphereCollider:
+--- !u!65 &4766044459010563258
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -627,7 +641,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Size: {x: 50, y: 30, z: 32}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6433627233157736554
 MonoBehaviour:
@@ -644,10 +658,22 @@ MonoBehaviour:
   _desiredLayer:
     serializedVersion: 2
     m_Bits: 128
-  _collider: {fileID: 7867183703938101841}
+  _collider: {fileID: 4766044459010563258}
   _onTriggerEnter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5956685818370336137}
+        m_TargetAssemblyTypeName: PawnAttackController, Assembly-CSharp
+        m_MethodName: AddTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onTriggerStay:
     m_PersistentCalls:
       m_Calls: []
@@ -712,7 +738,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3006869341582262820}
   m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 9, y: 80, z: 0}
+  m_LocalPosition: {x: 10.8, y: 80, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

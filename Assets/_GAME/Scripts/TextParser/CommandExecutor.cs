@@ -15,6 +15,9 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     [Header("String Events")]
     [SerializeField] StringEvent _useItemEvent;
+    
+    [Header("Int Events")]
+    [SerializeField] IntEvent _shootEvent;
 
     [Header("Void Events")]
     [SerializeField] VoidEvent _restEvent;
@@ -84,6 +87,9 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 break;
             case "setTrap":
                 HandleSetTrap(command.Args);
+                break;
+            case "shoot":
+                HandleShoot(command.Args);
                 break;
             default:
                 Debug.LogWarning("Invalid command");
@@ -221,5 +227,18 @@ public class CommandExecutor : Singleton<CommandExecutor>
         }
 
         _setTrapEvent?.Raise();
+    }
+
+    void HandleShoot(string[] args)
+    {
+        if (args.Length != 1)
+        {
+            Debug.LogWarning("Invalid number of arguments for shoot command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for shoot command", 3f);
+            return;
+        }
+
+        int enemyIndex = int.Parse(args[0]);
+        _shootEvent?.Raise(enemyIndex);
     }
 }
