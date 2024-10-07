@@ -9,7 +9,7 @@ public class ScreenCoordinateDisplay : MonoBehaviour
     [SerializeField] TextMeshProUGUI _text;
     [SerializeField] Image _image;
     [SerializeField] RectTransform _rectTransform;
-    [SerializeField] float _displayTime = 10f;
+    // [SerializeField] float _displayTime = 10f;
     [SerializeField] Vector2 _offScreenAnchoredPosition;
 
     Transform _coordinateParent;

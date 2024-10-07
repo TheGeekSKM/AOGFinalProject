@@ -8,7 +8,7 @@ public class PawnAttackController : MonoBehaviour
     [SerializeField, ReadOnly] List<EnemyBrain> _target = new();
     public List<EnemyBrain> Targets => _target;
     [SerializeField] Transform _closestTarget;
-    [SerializeField] float _targetUpdateRate = 0.5f;
+    // [SerializeField] float _targetUpdateRate = 0.5f;
     [SerializeField] WeaponItemData _equippedWeapon;
     [SerializeField] EnemyEvent _onTargetFound;
     [SerializeField] Transform _firePointPivot;
@@ -23,7 +23,6 @@ public class PawnAttackController : MonoBehaviour
             Debug.Log($"Equipped weapon changed to {_equippedWeapon.ItemName}");
         }
     }
-    float counter = 0;
 
     public Action OnTargetFound;
 

@@ -52,7 +52,7 @@ public class PawnController : Singleton<PawnController>
         set
         {
             _state = value;
-            Debug.Log($"Pawn state changed to {_state}");
+            // Debug.Log($"Pawn state changed to {_state}");
         }
     }
 

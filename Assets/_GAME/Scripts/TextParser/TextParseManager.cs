@@ -83,7 +83,7 @@ public class TextParseManager : MonoBehaviour
         }
 
         var command = new Command(commandName, args);
-        Debug.Log(command.ToString());
+        // Debug.Log(command.ToString());
         return command;
     }
     
