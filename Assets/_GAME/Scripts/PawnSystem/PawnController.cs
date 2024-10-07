@@ -76,8 +76,9 @@ public class PawnController : Singleton<PawnController>
     public PawnAmbushState AmbushState { get; private set; }
     public PawnAttackState AttackState { get; private set; }
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _pawnStateMachine = new StateMachine();
 
         IdleState = new PawnIdleState(this);
@@ -135,6 +136,7 @@ public class PawnController : Singleton<PawnController>
     public void Stop()
     {
         _navMeshAgent.ResetPath();
+        PawnChatManager.Instance.AddChat("Ooop-freezin' in place, cap...", ChatterType.Pawn);
     }
 
     [Button]
@@ -143,6 +145,7 @@ public class PawnController : Singleton<PawnController>
         Debug.Log("Setting destination");
         _pawnStateMachine.ChangeState(MoveState);
         _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+        PawnChatManager.Instance.AddChat($"Movin' to {coords.x}, {coords.y}, cap...might take me a sec...", ChatterType.Pawn);
     }
 
     public void PushDestination(Vector2 coords)
@@ -151,6 +154,7 @@ public class PawnController : Singleton<PawnController>
         SetPawnSpeed(_startingPawnSpeed * 2);
         _pawnStateMachine.ChangeState(MoveState);
         _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+        PawnChatManager.Instance.AddChat($"Haulin' ass to {coords.x}, {coords.y}, cap!", ChatterType.Pawn);
     }
 
     public void ScoutAhead(Vector2 coords)
@@ -161,6 +165,7 @@ public class PawnController : Singleton<PawnController>
         CreateScoutTrigger(coords);
 
         _navMeshAgent.SetDestination(new Vector3(coords.x, transform.position.y, coords.y));
+        PawnChatManager.Instance.AddChat($"Imma scout ahead, cap...gimme a sec.", ChatterType.Pawn);
     }
 
     void CreateScoutTrigger(Vector2 coords)
@@ -190,18 +195,22 @@ public class PawnController : Singleton<PawnController>
         {
             ResetPawnSpeed();
         }
+        PawnChatManager.Instance.AddChat($"Crouchin' down, cap...", ChatterType.Pawn);
     }
 
     public void SetPlayerRest() 
     {
         _pawnStateMachine.ChangeState(FrozenState);
         _resting = true;
+
+        PawnChatManager.Instance.AddChat("Thanks cap...Restin' up...phew...", ChatterType.Pawn);
     }
 
     public void SetPlayerIdle()
     {
         _pawnStateMachine.ChangeState(IdleState);
         ResetPawnSpeed();
+        PawnChatManager.Instance.AddChat("Alrighty, lemme know if you need me to do anythin', cap...", ChatterType.Pawn);
     }
 
     public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);

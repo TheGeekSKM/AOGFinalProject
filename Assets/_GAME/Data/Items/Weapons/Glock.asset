@@ -22,7 +22,7 @@ MonoBehaviour:
   HitLayer:
     serializedVersion: 2
     m_Bits: 1015
-  Spread: {x: 0.3, y: 0.3, z: 0.3}
+  Spread: {x: 0, y: 0, z: 0}
   FireRate: 0.25
   Damage: 10
   ColorOverLifeTime:
@@ -54,13 +54,13 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  Material: {fileID: 0}
+  Material: {fileID: 2100000, guid: b36ec6ffb8aee48468ff6819a370eac1, type: 2}
   WidthCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.008332826
-      value: 0.06604004
+      value: 0.1
       inSlope: 0.0007549645
       outSlope: 0.0007549645
       tangentMode: 0
@@ -79,9 +79,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Duration: 0.1
+  Duration: 0.2
   MinVertexDistance: 0.1
   MissDistance: 100
   SimulationSpeed: 100
   ShootSystem: {fileID: 257301433848904397, guid: 4f67210a9ba414747ab44c3427a2c8ed,
     type: 3}
+  HitEffect: {fileID: 0}

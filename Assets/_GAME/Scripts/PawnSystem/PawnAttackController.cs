@@ -13,6 +13,8 @@ public class PawnAttackController : MonoBehaviour
     [SerializeField] float _targetUpdateRate = 0.5f;
     [SerializeField] WeaponItemData _equippedWeapon;
     [SerializeField] EnemyEvent _onTargetFound;
+    [SerializeField] Transform _firePointPivot;
+
 
     public WeaponItemData EquippedWeapon
     {
@@ -27,6 +29,11 @@ public class PawnAttackController : MonoBehaviour
 
     public Action OnTargetFound;
 
+    void Start()
+    {
+        if (EquippedWeapon) EquippedWeapon.UseItem();
+    }
+
     public void AddTarget(GameObject target)
     {
         var enemyBrain = target.GetComponent<EnemyBrain>();
@@ -37,15 +44,28 @@ public class PawnAttackController : MonoBehaviour
         _onTargetFound?.Raise(enemyBrain);
     }
 
+    public void Shoot(int index)
+    {
+        if (EquippedWeapon == null) return;
+        if (index < 0 || index >= _target.Count) return;
+
+        var target = _target[index];
+        if (target == null) return;
+
+        Debug.Log($"Shooting at {target.name}");
+        _firePointPivot.LookAt(target.transform);
+        EquippedWeapon.Shoot();
+    }
+
     void Update()
     {
-        if (_target.Count == 0) return;
-        if (counter < _targetUpdateRate)
-        {
-            counter += Time.deltaTime;
-            return;
-        }
-        counter = 0;
+        // if (_target.Count == 0) return;
+        // if (counter < _targetUpdateRate)
+        // {
+        //     counter += Time.deltaTime;
+        //     return;
+        // }
+        // counter = 0;
 
         // _closestTarget = transform.GetClosestEntity(_target);
         // OnTargetFound?.Invoke();

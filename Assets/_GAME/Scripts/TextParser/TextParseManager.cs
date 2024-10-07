@@ -36,7 +36,7 @@ public class TextParseManager : MonoBehaviour
 
     void OnEndEdit(string text)
     {
-        Debug.Log(text);
+        // Debug.Log(text);
         Command command = ParseCommand(text);
         if (command != null)
         {

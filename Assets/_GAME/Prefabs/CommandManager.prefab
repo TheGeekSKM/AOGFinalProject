@@ -49,9 +49,11 @@ MonoBehaviour:
   _scoutAheadEvent: {fileID: 11400000, guid: 61722767c09038542a8c7c562a00dec4, type: 2}
   _crouchEvent: {fileID: 11400000, guid: 67dc41cc6156b8247beb766221b372b4, type: 2}
   _useItemEvent: {fileID: 11400000, guid: 39d22222af5d96647917185b47cd71b0, type: 2}
+  _shootEvent: {fileID: 11400000, guid: 089dc62c4e5579744a51e8aa4c5cdcd7, type: 2}
   _restEvent: {fileID: 11400000, guid: d26eda670b23a87448781c8b3ae7b266, type: 2}
   _ambushEvent: {fileID: 11400000, guid: 0e2e962f7e22a674581361ca21c64d6c, type: 2}
   _freezeEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
   _lootEvent: {fileID: 11400000, guid: 9bef12655a33ac24db7ca3135e9108da, type: 2}
   _inspectEvent: {fileID: 11400000, guid: ba585b70d3a81e342a54768161ded1f7, type: 2}
   _setTrapEvent: {fileID: 11400000, guid: 08e945bfaa152ac43a33a4ca584bb5d8, type: 2}
+  _previousCommands: []

@@ -58,6 +58,7 @@ public class WeaponItemData : ItemData
 
     public void Shoot()
     {
+
         if (Time.time > FireRate + _lastShootTime)
         {
             _lastShootTime = Time.time;
@@ -82,43 +83,43 @@ public class WeaponItemData : ItemData
 
     IEnumerator ShootTrail(Vector3 start, Vector3 end, RaycastHit hit)
     {
-        var trail = _trailPool.Get();
-        trail.gameObject.SetActive(true);
-        trail.transform.position = start;
-        
+        var instance = _trailPool.Get();
+        instance.gameObject.SetActive(true);
+        instance.transform.position = start;
+
         yield return null;
 
-        trail.emitting = true;
-        trail.AddPosition(start);
+        instance.emitting = true;
+
         float distance = Vector3.Distance(start, end);
-        float time = distance / SimulationSpeed;
-        float elapsedTime = 0f;
-        while (elapsedTime < time)
+        float remainingDistance = distance;
+
+        while (remainingDistance > 0)
         {
-            trail.AddPosition(Vector3.Lerp(start, end, elapsedTime / time));
-            elapsedTime += Time.deltaTime;
+            instance.transform.position = Vector3.Lerp(
+                start, end, 
+                Mathf.Clamp01(1 - (remainingDistance / distance)));
+            remainingDistance -= SimulationSpeed * Time.deltaTime;
+
             yield return null;
         }
-        trail.AddPosition(end);
 
-        //TODO: Add hit effect
+        instance.transform.position = end;
+
         if (hit.collider != null)
         {
-            Debug.Log($"Hit {hit.collider.name}");
             var health = hit.collider.GetComponent<Health>();
-            if (health) health.ChangeHealth(-Damage);
+            if (health != null) health.ChangeHealth(-Damage);
 
-            if (HitEffect != null)
-            {
-                Instantiate(HitEffect, hit.point, Quaternion.identity);
-            }
+            
+            Instantiate(HitEffect, hit.point, Quaternion.identity);
         }
 
         yield return new WaitForSeconds(Duration);
         yield return null;
 
-        trail.emitting = false;
-        trail.gameObject.SetActive(false);
-        _trailPool.Release(trail);
+        instance.emitting = false;
+        instance.gameObject.SetActive(false);
+        _trailPool.Release(instance);
     }
 }
