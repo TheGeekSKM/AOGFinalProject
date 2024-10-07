@@ -52,9 +52,11 @@ MonoBehaviour:
   _shootEvent: {fileID: 11400000, guid: 089dc62c4e5579744a51e8aa4c5cdcd7, type: 2}
   _restEvent: {fileID: 11400000, guid: d26eda670b23a87448781c8b3ae7b266, type: 2}
   _mapOpenEvent: {fileID: 11400000, guid: 8ec7c3b121fa1b0499c688bf27033e8f, type: 2}
+  _helpOpenEvent: {fileID: 11400000, guid: e68fd6a2beae84b4da9fa6c015748c39, type: 2}
   _ambushEvent: {fileID: 11400000, guid: 0e2e962f7e22a674581361ca21c64d6c, type: 2}
   _freezeEvent: {fileID: 11400000, guid: 0513eb9512a56a44687a74f4cf8530c2, type: 2}
   _lootEvent: {fileID: 11400000, guid: 9bef12655a33ac24db7ca3135e9108da, type: 2}
   _inspectEvent: {fileID: 11400000, guid: ba585b70d3a81e342a54768161ded1f7, type: 2}
   _setTrapEvent: {fileID: 11400000, guid: 08e945bfaa152ac43a33a4ca584bb5d8, type: 2}
+  _variableEvent: {fileID: 11400000, guid: e9cf9fb6fe406f347a1074a356551c50, type: 2}
   _previousCommands: []

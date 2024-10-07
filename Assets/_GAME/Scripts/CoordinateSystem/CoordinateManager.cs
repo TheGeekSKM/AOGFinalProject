@@ -39,6 +39,7 @@ public class CoordinateManager : MonoBehaviour
         _coordinateParent.position = new Vector3(worldPosition.x, 0, worldPosition.z);
 
         _screenCoordinateEvent?.Raise(_coordinateParent);
+        GameCanvasManager.Instance.SetVariable("click", $"{mousePos.x}, {mousePos.y}");
     }
 
     public void DisableCoordinate() => _coordinateDisableEvent?.Raise();

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using SaiUtils.Extensions;
-using SaiUtils.GameEvents;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -32,6 +30,12 @@ public class PawnAttackController : MonoBehaviour
     void Start()
     {
         if (EquippedWeapon) EquippedWeapon.UseItem();
+    }
+
+    public void SetEquippedWeapon(WeaponItemData weapon)
+    {
+        EquippedWeapon?.Unequip();
+        EquippedWeapon = weapon;
     }
 
     public void AddTarget(GameObject target)

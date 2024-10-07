@@ -71,8 +71,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: <b>Pawn:</b> Hey, boss man!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9fdaec4acc5831a49af0905c903976a3, type: 2}
+  m_sharedMaterial: {fileID: -4797876002295211258, guid: 9fdaec4acc5831a49af0905c903976a3,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -22,11 +22,13 @@ public class CommandExecutor : Singleton<CommandExecutor>
     [Header("Void Events")]
     [SerializeField] VoidEvent _restEvent;
     [SerializeField] VoidEvent _mapOpenEvent;
+    [SerializeField] VoidEvent _helpOpenEvent;
     [SerializeField] VoidEvent _ambushEvent;
     [SerializeField] VoidEvent _freezeEvent;
     [SerializeField] VoidEvent _lootEvent;
     [SerializeField] VoidEvent _inspectEvent;
     [SerializeField] VoidEvent _setTrapEvent;
+    [SerializeField] VoidEvent _variableEvent;
 
     [SerializeField] List<string> _previousCommands = new List<string>();
     int _commandIndex = 0;
@@ -65,7 +67,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
             case "freeze":
                 HandleFreeze(command.Args);
                 break;
-            case "scoutAhead":
+            case "scout":
                 HandleScoutAhead(command.Args);
                 break;
             case "rest":
@@ -94,6 +96,15 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 break;
             case "map":
                 HandleMap(command.Args);
+                break;
+            case "help":
+                HandleHelp(command.Args);
+                break;
+            case "setVar":
+                HandleSetVariable(command.Args);
+                break;
+            case "var":
+                HandleVariable(command.Args);
                 break;
             default:
                 Debug.LogWarning("Invalid command");
@@ -256,5 +267,44 @@ public class CommandExecutor : Singleton<CommandExecutor>
         }
 
         _mapOpenEvent?.Raise();
+    }
+
+    void HandleHelp(string[] args)
+    {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for help command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for help command", 3f);
+            return;
+        }
+
+        _helpOpenEvent?.Raise();
+    }
+
+    void HandleSetVariable(string[] args)
+    {
+        if (args.Length != 2)
+        {
+            Debug.LogWarning("Invalid number of arguments for set variable command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for set variable command", 3f);
+            return;
+        }
+
+        string key = args[0];
+        string value = args[1];
+
+        GameCanvasManager.Instance.SetVariable(key, value);
+    }
+
+    void HandleVariable(string[] args)
+    {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for var command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for var command", 3f);
+            return;
+        }
+
+        _variableEvent?.Raise();
     }
 }

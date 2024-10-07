@@ -195,7 +195,7 @@ public class PawnController : Singleton<PawnController>
         {
             ResetPawnSpeed();
         }
-        PawnChatManager.Instance.AddChat($"Crouchin' down, cap...", ChatterType.Pawn);
+        // PawnChatManager.Instance.AddChat($"Crouchin' down, cap...", ChatterType.Pawn);
     }
 
     public void SetPlayerRest() 
@@ -210,7 +210,7 @@ public class PawnController : Singleton<PawnController>
     {
         _pawnStateMachine.ChangeState(IdleState);
         ResetPawnSpeed();
-        PawnChatManager.Instance.AddChat("Alrighty, lemme know if you need me to do anythin', cap...", ChatterType.Pawn);
+        // PawnChatManager.Instance.AddChat("Alrighty, lemme know if you need me to do anythin', cap...", ChatterType.Pawn);
     }
 
     public void ResetPawnSpeed() => SetPawnSpeed(_startingPawnSpeed);

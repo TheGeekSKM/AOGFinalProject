@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using SaiUtils.Singleton;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-public class GameCanvasManager : Singleton<GameCanvasManager>
+public class GameCanvasManager : SerializedMonoBehaviour
 {
     [Header("Inventory")]
     [SerializeField] InventoryDisplayController _inventoryCanvas;
@@ -18,6 +19,29 @@ public class GameCanvasManager : Singleton<GameCanvasManager>
 
     [Header("Map")]
     [SerializeField] RectTransform _mapCanvasRectTransform;
+
+    [Header("Help")]
+    [SerializeField] RectTransform _helpCanvasRectTransform;
+
+    [Header("Variables")]
+    [SerializeField] Dictionary<string, string> variables = new();
+    [SerializeField] RectTransform _variablePanelCanvas;
+    [SerializeField] RectTransform _variablePanelParent;
+    [SerializeField] VariableDisplayController _variablePanelPrefab;
+    List<VariableDisplayController> _variablePanels = new List<VariableDisplayController>();
+
+    public static GameCanvasManager Instance { get; private set; }
+
+    private void Awake() {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    public void SetVariable(string key, string value)
+    {
+        if (variables.ContainsKey(key)) variables[key] = value;
+        else variables.Add(key, value);
+    }
 
     public void SetInventoryVisible() 
     {
@@ -38,6 +62,40 @@ public class GameCanvasManager : Singleton<GameCanvasManager>
     public void SetMapInvisible()
     {
         _mapCanvasRectTransform.DOAnchorPosY(-1080 * 2, 0.2f).SetEase(Ease.InQuart);
+    }
+
+    public void SetHelpVisible()
+    {
+        Debug.Log("Help visible");
+        _helpCanvasRectTransform.DOAnchorPosX(0, 0.2f).SetEase(Ease.OutQuart);
+    }
+
+    public void SetHelpInvisible()
+    {
+        Debug.Log("Help invisible");
+        _helpCanvasRectTransform.DOAnchorPosX(1920 * 2, 0.2f).SetEase(Ease.InQuart);
+    }
+
+    public void SetVariablePanelVisible()
+    {
+        foreach (var variable in variables)
+        {
+            var variablePanel = Instantiate(_variablePanelPrefab, _variablePanelParent);
+            variablePanel.Initialize(variable.Key, variable.Value);
+            _variablePanels.Add(variablePanel);
+        }
+        _variablePanelCanvas.DOAnchorPosY(0, 0.2f).SetEase(Ease.OutQuart);
+    }
+
+    public void SetVariablePanelInvisible()
+    {
+        _variablePanelCanvas.DOAnchorPosY(1080 * 2, 0.2f).SetEase(Ease.InQuart).OnComplete(() => {
+            foreach (var panel in _variablePanels)
+            {
+                Destroy(panel.gameObject);
+            }
+        });
+        
     }
 
     public void AddSelfToTargetList(EnemyBrain target)

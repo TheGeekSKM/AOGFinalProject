@@ -27,19 +27,26 @@ public class WeaponItemData : ItemData
     float _lastShootTime;
     MonoBehaviour _owner;
     Transform _parent;
+    bool _equipped = false;
+    public bool Equipped => _equipped;
 
+    public void Unequip()
+    {
+        _equipped = false;
+        _owner = null;
+        _parent = null;
+    }
     public override void UseItem()
     {
         var pawnAttackController = PawnController.Instance.AttackController;
-        pawnAttackController.EquippedWeapon = this;
+        pawnAttackController.SetEquippedWeapon(this);
 
         _owner = pawnAttackController;
         _parent = PawnController.Instance.FirePoint;
 
-        
-
         _lastShootTime = 0f;
         _trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
+        _equipped = true;
     }
 
     TrailRenderer CreateTrail()
@@ -111,7 +118,7 @@ public class WeaponItemData : ItemData
             var health = hit.collider.GetComponent<Health>();
             if (health != null) health.ChangeHealth(-Damage);
 
-            
+
             Instantiate(HitEffect, hit.point, Quaternion.identity);
         }
 
