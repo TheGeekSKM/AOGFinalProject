@@ -7,7 +7,9 @@ public class VariableDisplayController : MonoBehaviour, IPointerClickHandler
 {
     [Header("UI Components")]
     [SerializeField] TextMeshProUGUI _variableName;
+    public string Key => _variableName.text;
     [SerializeField] TextMeshProUGUI _variableValue;
+    public string Value => _variableValue.text;
 
     [Header("Events")]
     [SerializeField] StringEvent _onVariableClick;
@@ -21,5 +23,10 @@ public class VariableDisplayController : MonoBehaviour, IPointerClickHandler
     {
         // Handle pointer click event here
         _onVariableClick?.Raise(_variableValue.text);
+    }
+
+    public void UpdateValue(string value)
+    {
+        _variableValue.text = value;
     }
 }

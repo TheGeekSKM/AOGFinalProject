@@ -34,6 +34,11 @@ public class TextParseManager : MonoBehaviour
         }
     }
 
+    public void AddText(string text)
+    {
+        _inputField.text += text;
+    }
+
     void OnEndEdit(string text)
     {
         // Debug.Log(text);

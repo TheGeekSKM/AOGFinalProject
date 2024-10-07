@@ -28,7 +28,9 @@ public class ScreenCoordinateDisplay : MonoBehaviour
     public void Initialize(Transform coordinateParent)
     {
         _coordinateParent = coordinateParent;
-        _text.text = $"[{Mathf.RoundToInt(coordinateParent.position.x)}, {Mathf.RoundToInt(coordinateParent.position.z)}]";
+        var coords = Vector2Int.RoundToInt(new Vector2(coordinateParent.position.x, coordinateParent.position.z));
+        _text.text = $"[{coords.x}, {coords.y}]";
+        GameCanvasManager.Instance.SetVariable("click", $"{coords.x}, {coords.y}");
         
     }
 

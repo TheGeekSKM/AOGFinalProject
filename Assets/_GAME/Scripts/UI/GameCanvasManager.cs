@@ -41,6 +41,15 @@ public class GameCanvasManager : SerializedMonoBehaviour
     {
         if (variables.ContainsKey(key)) variables[key] = value;
         else variables.Add(key, value);
+
+        if (_variablePanels.Exists(panel => panel.Key == key))
+        {
+            _variablePanels.Find(panel => panel.Key == key).UpdateValue(value);
+            return;
+        }
+        var variablePanel = Instantiate(_variablePanelPrefab, _variablePanelParent);
+        variablePanel.Initialize(key, value);
+        _variablePanels.Add(variablePanel);
     }
 
     public void SetInventoryVisible() 
@@ -78,24 +87,12 @@ public class GameCanvasManager : SerializedMonoBehaviour
 
     public void SetVariablePanelVisible()
     {
-        foreach (var variable in variables)
-        {
-            var variablePanel = Instantiate(_variablePanelPrefab, _variablePanelParent);
-            variablePanel.Initialize(variable.Key, variable.Value);
-            _variablePanels.Add(variablePanel);
-        }
         _variablePanelCanvas.DOAnchorPosY(0, 0.2f).SetEase(Ease.OutQuart);
     }
 
     public void SetVariablePanelInvisible()
     {
-        _variablePanelCanvas.DOAnchorPosY(1080 * 2, 0.2f).SetEase(Ease.InQuart).OnComplete(() => {
-            foreach (var panel in _variablePanels)
-            {
-                Destroy(panel.gameObject);
-            }
-        });
-        
+        _variablePanelCanvas.DOAnchorPosY(1080 * 2, 0.2f).SetEase(Ease.InQuart);
     }
 
     public void AddSelfToTargetList(EnemyBrain target)
