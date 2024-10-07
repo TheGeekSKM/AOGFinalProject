@@ -16,6 +16,9 @@ public class GameCanvasManager : Singleton<GameCanvasManager>
     [SerializeField] List<Transform> _targets = new List<Transform>();
     [SerializeField] List<RectTransform> _targetPanels = new List<RectTransform>();
 
+    [Header("Map")]
+    [SerializeField] RectTransform _mapCanvasRectTransform;
+
     public void SetInventoryVisible() 
     {
         _inventoryCanvasRectTransform.DOAnchorPosX(0, 0.2f).SetEase(Ease.OutQuart);
@@ -24,7 +27,17 @@ public class GameCanvasManager : Singleton<GameCanvasManager>
 
     public void SetInventoryInvisible()
     {
-        _inventoryCanvasRectTransform.DOAnchorPosX(-1920, 0.2f).SetEase(Ease.InQuart);
+        _inventoryCanvasRectTransform.DOAnchorPosX(-1920 * 2, 0.2f).SetEase(Ease.InQuart);
+    }
+
+    public void SetMapVisible()
+    {
+        _mapCanvasRectTransform.DOAnchorPosY(0, 0.2f).SetEase(Ease.OutQuart);
+    }
+
+    public void SetMapInvisible()
+    {
+        _mapCanvasRectTransform.DOAnchorPosY(-1080 * 2, 0.2f).SetEase(Ease.InQuart);
     }
 
     public void AddSelfToTargetList(EnemyBrain target)

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class DraggableWindow : MonoBehaviour, IDragHandler
 {
     [SerializeField] Canvas canvas;
-    [SerializeField] Canvas _ownerCanvas;
     RectTransform _rectTransform;
 
 

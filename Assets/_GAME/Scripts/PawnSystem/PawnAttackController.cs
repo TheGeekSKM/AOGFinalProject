@@ -47,12 +47,17 @@ public class PawnAttackController : MonoBehaviour
     public void Shoot(int index)
     {
         if (EquippedWeapon == null) return;
-        if (index < 0 || index >= _target.Count) return;
+        if (index < 0 || index >= _target.Count) 
+        {
+            PawnChatManager.Instance.AddChat("uhhh...I dunno what enemy you're talkin' about, cap...", ChatterType.Pawn);
+            return;
+        }
 
         var target = _target[index];
         if (target == null) return;
 
         Debug.Log($"Shooting at {target.name}");
+        PawnChatManager.Instance.AddChat($"Took a shot at Target: {target.EnemyIndex}", ChatterType.Pawn);
         _firePointPivot.LookAt(target.transform);
         EquippedWeapon.Shoot();
     }

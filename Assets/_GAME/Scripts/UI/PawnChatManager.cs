@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using SaiUtils.Singleton;
 using TMPro;
 using UnityEngine;
@@ -29,5 +28,6 @@ public class PawnChatManager : Singleton<PawnChatManager>
 
         var chatTextInstance = Instantiate(chatText, chatParent);
         chatTextInstance.text = chat;
+        chatTextInstance.GetComponent<RectTransform>().DOAnchorPosX(300, 0.2f).SetEase(Ease.OutQuart);
     }
 }

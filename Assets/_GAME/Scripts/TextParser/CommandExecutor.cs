@@ -21,6 +21,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     [Header("Void Events")]
     [SerializeField] VoidEvent _restEvent;
+    [SerializeField] VoidEvent _mapOpenEvent;
     [SerializeField] VoidEvent _ambushEvent;
     [SerializeField] VoidEvent _freezeEvent;
     [SerializeField] VoidEvent _lootEvent;
@@ -90,6 +91,9 @@ public class CommandExecutor : Singleton<CommandExecutor>
                 break;
             case "shoot":
                 HandleShoot(command.Args);
+                break;
+            case "map":
+                HandleMap(command.Args);
                 break;
             default:
                 Debug.LogWarning("Invalid command");
@@ -240,5 +244,17 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
         int enemyIndex = int.Parse(args[0]);
         _shootEvent?.Raise(enemyIndex);
+    }
+
+    void HandleMap(string[] args)
+    {
+        if (args.Length != 0)
+        {
+            Debug.LogWarning("Invalid number of arguments for map command");
+            WarningManager.Instance.ShowWarning("Invalid number of arguments for map command", 3f);
+            return;
+        }
+
+        _mapOpenEvent?.Raise();
     }
 }
