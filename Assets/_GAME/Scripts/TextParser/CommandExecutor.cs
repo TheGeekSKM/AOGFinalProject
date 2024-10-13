@@ -15,6 +15,7 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     [Header("String Events")]
     [SerializeField] StringEvent _useItemEvent;
+    [SerializeField] StringEvent _commandEnteredEvent;
     
     [Header("Int Events")]
     [SerializeField] IntEvent _shootEvent;
@@ -59,6 +60,8 @@ public class CommandExecutor : Singleton<CommandExecutor>
 
     public void ExecuteCommand(Command command)
     {
+        _commandEnteredEvent?.Raise(command.CommandName);
+
         switch (command.CommandName)
         {
             case "move":

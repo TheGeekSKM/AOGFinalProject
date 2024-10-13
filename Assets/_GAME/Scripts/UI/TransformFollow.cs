@@ -12,6 +12,15 @@ public class TransformFollow : MonoBehaviour
     [SerializeField] Vector3 _offset = Vector3.zero;
 
 
+    void OnValidate()
+    {
+        if (_target == null) return;
+
+        if (_followPosition) transform.position = _target.position + _offset;
+        if (_followRotation) transform.rotation = _target.rotation;
+    }
+
+
     void Update()
     {
         if (_target == null) return;
