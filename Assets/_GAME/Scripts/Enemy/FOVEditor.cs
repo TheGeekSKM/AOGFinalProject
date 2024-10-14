@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
+#if UNITY_EDITOR
 [CustomEditor(typeof(EnemyBrain))]
 public class FOVEditor : Editor
 {
@@ -30,3 +30,5 @@ public class FOVEditor : Editor
 
 
 }
+
+#endif
